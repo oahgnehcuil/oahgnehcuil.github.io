@@ -1,0 +1,34 @@
+name: Update Financial Data
+
+on:
+  schedule:
+    # 設定定時觸發 (這裡設定為每天 UTC 00:00，約台灣時間早上 8 點)
+    - cron: '0 0 * * *'
+  workflow_dispatch: # 讓你可以手動點擊按鈕立即執行
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 檢出程式碼
+        uses: actions/checkout@v3
+
+      - name: 設定 Python 環境
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: 安裝必要套件
+        run: |
+          pip install yfinance pandas
+
+      - name: 執行資料抓取程式
+        run: python 202604008.py
+
+      - name: 將更新後的檔案推送到 GitHub
+        run: |
+          git config --global user.name "GitHub Action"
+          git config --global user.email "action@github.com"
+          git add index.html
+          git commit -m "自動更新金融指標數據" || exit 0
+          git push

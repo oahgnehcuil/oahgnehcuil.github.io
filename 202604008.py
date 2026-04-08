@@ -31,6 +31,5 @@ def calculate_mnav(stock_ticker, crypto_ticker, holdings_qty):
         "MNAV": mnav
     }
 
-# 以 MSTR 為例 (假設持有量)
-result = calculate_mnav("MSTR", "BTC-USD", 252220)
-print(result)
+with open("index.html", "w", encoding="utf-8") as f:
+    f.write(f"<html><body><h1>MNAV: {mnav_result}</h1></body></html>")
