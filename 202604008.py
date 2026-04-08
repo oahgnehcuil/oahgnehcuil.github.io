@@ -1,25 +1,36 @@
 import yfinance as yf
-import pandas as pd
 
-# 定義 DAT 公司清單
-tickers = ["MSTR", "MARA", "COIN", "TSLA", "BTC-USD"]
-
-def get_financial_summary():
-    summary_data = []
-    for t in tickers:
-        stock = yf.Ticker(t)
-        info = stock.info
-        summary_data.append({
-            "Symbol": t,
-            "Price": info.get("currentPrice", info.get("regularMarketPrice")),
-            "MarketCap": info.get("marketCap"),
-            "52WeekChange": info.get("52WeekChange")
-        })
+def calculate_mnav(stock_ticker, crypto_ticker, holdings_qty):
+    # 1. 抓取公司財報與即時股價
+    stock = yf.Ticker(stock_ticker)
+    crypto = yf.Ticker(crypto_ticker)
     
-    df = pd.DataFrame(summary_data)
-    # 將結果轉存為 HTML 表格片段，供 index.html 使用
-    df.to_html("data_table.html", index=False, classes="styled-table")
-    print("Data updated!")
+    # 取得最新帳面淨值 (Total Stockholder Equity)
+    balance_sheet = stock.balance_sheet
+    if balance_sheet.empty:
+        return "無法取得財報資料"
+    
+    book_value = balance_sheet.iloc[0]['Total Assets'] - balance_sheet.iloc[0]['Total Liabilities Net Minority Interest']
+    
+    # 2. 取得即時加密貨幣價格
+    crypto_price = crypto.history(period="1d")['Close'].iloc[-1]
+    
+    # 3. 假設公司在財報中的加密貨幣帳面價值 (這部分通常以成本計，需查閱財報備註)
+    # 這裡簡化計算：淨值調整 = (現值 - 成本)
+    # 註：MSTR 現在採用公允價值會計準則，帳面價值可能已接近市價
+    market_value_of_holdings = holdings_qty * crypto_price
+    
+    # 這裡的 Modified NAV 計算邏輯可以根據你的作業定義調整
+    # 範例：市值 (Market Cap) / MNAV 常用來判斷溢價
+    mnav = book_value + market_value_of_holdings 
+    
+    return {
+        "Ticker": stock_ticker,
+        "Book Value": book_value,
+        "Crypto Market Value": market_value_of_holdings,
+        "MNAV": mnav
+    }
 
-if __name__ == "__main__":
-    get_financial_summary()
+# 以 MSTR 為例 (假設持有量)
+result = calculate_mnav("MSTR", "BTC-USD", 252220)
+print(result)
