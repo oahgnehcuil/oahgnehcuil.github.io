@@ -1,110 +1,20 @@
-<!DOCTYPE html>
-<html lang="zh-TW">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的個人網頁</title>
-    <style>
-        /* 基礎樣式設定 */
-        body {
-            font-family: "Segoe UI", Microsoft JhengHei, sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f9;
-            color: #333;
-        }
-
-        header {
-            background: #24292e; /* GitHub 風格的深色 */
-            color: #ffffff;
-            padding: 2rem 1rem;
-            text-align: center;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 2rem auto;
-            padding: 0 1rem;
-        }
-
-        section {
-            background: #fff;
-            padding: 1.5rem;
-            margin-bottom: 1rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-
-        h1 { margin: 0; }
-        h2 { color: #0366d6; border-bottom: 2px solid #eaecef; padding-bottom: 0.3rem; }
-
-        .profile-img {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            display: block;
-            margin: 0 auto 1rem;
-            object-fit: cover;
-            border: 3px solid #fff;
-        }
-
-        footer {
-            text-align: center;
-            padding: 2rem;
-            font-size: 0.9rem;
-            color: #666;
-        }
-
-        /* 按鈕樣式 */
-        .btn {
-            display: inline-block;
-            background: #28a745;
-            color: white;
-            padding: 0.5rem 1rem;
-            text-decoration: none;
-            border-radius: 5px;
-            margin-top: 10px;
-        }
-        .btn:hover { background: #218838; }
-    </style>
-</head>
-<body>
-
-    <header>
-        <h1>歡迎來到我的 GitHub Pages</h1>
-        <p>這是我的第一個網頁專案</p>
-    </header>
-
-    <div class="container">
-        <section id="about">
-            <h2>關於我</h2>
-            <p>你好！我是一名資工系的學生，目前正在學習如何使用 GitHub 建置靜態網站。</p>
-            <p>我感興趣的領域包括：</p>
-            <ul>
-                <li>演算法設計與分析</li>
-                <li>量子計算 (Quantum Computing)</li>
-                <li>網頁開發</li>
-            </ul>
-        </section>
-
-        <section id="projects">
-            <h2>我的專案</h2>
-            <p>在這裡我會放一些我參與過的專案或是課程作業。</p>
-            <a href="https://github.com/" class="btn" target="_blank">前往我的 GitHub</a>
-        </section>
-
-        <section id="contact">
-            <h2>聯絡方式</h2>
-            <p>如果你有任何問題，歡迎透過電子郵件聯絡我。</p>
-            <p>Email: <a href="mailto:your-email@example.com">your-email@example.com</a></p>
-        </section>
-    </div>
-
-    <footer>
-        <p>&copy; 2026 姓名. Built with HTML & CSS.</p>
-    </footer>
-
-    
-</body>
-</html>
+<div class="tradingview-widget-container">
+  <div id="tradingview_chart"></div>
+  <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+  <script type="text/javascript">
+  new TradingView.widget({
+    "width": "100%",
+    "height": 400,
+    "symbol": "NASDAQ:MSTR",
+    "interval": "D",
+    "timezone": "Etc/UTC",
+    "theme": "light",
+    "style": "1",
+    "locale": "zh_TW",
+    "toolbar_bg": "#f1f3f6",
+    "enable_publishing": false,
+    "allow_symbol_change": true,
+    "container_id": "tradingview_chart"
+  });
+  </script>
+</div>
